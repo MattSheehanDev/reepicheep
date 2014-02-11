@@ -36,7 +36,7 @@ var server = net.createServer(function(conn)
 
 	conn.on('data', function(data)
 	{
-		if(data == '\r\n' || data == '\r' || data == '\n')
+		if(data == '\r\n')
 		{
 			var submitLine = data;
 
