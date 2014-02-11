@@ -1,5 +1,5 @@
 {
-	"name" : "tcp-chat",
+	"name" : "MattChatt",
 	"description" : "tcp chat server",
-	"version" : "0.0.1"
+	"version" : "0.0.2"
 }
