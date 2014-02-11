@@ -7,9 +7,6 @@ var Person = require('./person');
 var counter = 0;
 var users = [];
 
-//Know when user hit Enter key
-var delimiter = '\r\n';
-
 
 //Server
 var server = net.createServer(function(conn)
@@ -39,9 +36,11 @@ var server = net.createServer(function(conn)
 
 	conn.on('data', function(data)
 	{
-		if(data == delimiter)
+		if(data == '\r\n' || data == '\r' || data == '\n')
 		{
-			data.replace(delimiter, '');
+			var submitLine = data;
+
+			data.replace(submitLine, '');
 
 			if(!person.login)
 			{
@@ -57,15 +56,13 @@ var server = net.createServer(function(conn)
 
 					person.login = true;
 
-					broadcast('\033[33m > ' + person.name + ' joined the room. \033[39m \r\n');
+					broadcast('\033[33m > ' + person.name + ' joined the room. \033[39m\r\n');
 				}
-				console.log(person.buffer);
 
 			}
 			else
 			{
-				broadcast('\033[33m > ' + person.name + ' : ' + person.buffer + delimiter + '\033[39m', true);
-				console.log(person.buffer);
+				broadcast('\033[33m > ' + person.name + ' : ' + person.buffer + '\r\n\033[39m', true);
 			}
 
 			person.clearBuffer();
@@ -80,7 +77,7 @@ var server = net.createServer(function(conn)
 	{
 		counter--;
 		delete users[person.name];
-		broadcast('\033[33m > ' + person.name + ' left the room.\033[39m', true);
+		broadcast('\033[33m > ' + person.name + ' left the room.\033[39m\r\n', true);
 	});
 });
 
